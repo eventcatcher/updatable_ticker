@@ -1,0 +1,25 @@
+name: updatable_ticker_sample
+description: "A sample app demonstrating the Flutter Updatable Ticker library."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.0" # build with flutter 3.29.2, Dart 3.7.2 on macos
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Local dependency to the Ticker library
+  ipsum: ^1.0.1
+  updatable_ticker:
+    path: ../updatable_ticker_library
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
