@@ -6,7 +6,7 @@ repository: https://github.com/eventcatcher/updatable_ticker
 
 # Author information is included in the LICENSE file
 # License is required for pub.dev
-license: MIT
+license: BSD 3-Clause License
 # Add topics for better discoverability
 topics:
   - animation
@@ -15,13 +15,12 @@ topics:
   - ui
 
 environment:
-  sdk: ^3.7.2
-  flutter: ">=1.17.0"
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.0" # build with flutter 3.29.2, Dart 3.7.2
 
 dependencies:
   flutter:
     sdk: flutter
-  ipsum: ^1.0.1
 
 dev_dependencies:
   flutter_test:

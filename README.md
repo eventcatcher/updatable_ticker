@@ -90,7 +90,7 @@ In my example, I have randomly timed the actualization of text data with a Timer
 The UpdatableTicker will rebuild when alignment, width or font size changes.
 To do this, you must wrap the UpdatableTicker with OrientationBuilder, SizeChangedLayoutNotifier and a ValueKey with this data as the key for UpdatableTicker.
 
-A nice example how to do this can you find on my Github Page (part of updatable_ticker repo) here: https://github.com/eventcatcher/updatable_ticker
+A nice example how to do this can you find on my Github Page (part of updatable_ticker repo) here: https://github.com/eventcatcher/updatable_ticker/tree/main/updatable_ticker_sample
 
 # Feedback
 
