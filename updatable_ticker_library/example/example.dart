@@ -6,16 +6,34 @@ import 'package:flutter/scheduler.dart';
 import 'package:ipsum/ipsum.dart';
 import 'package:updatable_ticker/updatable_ticker.dart';
 
-class UpdatableTickerExamplePage extends StatefulWidget {
-  const UpdatableTickerExamplePage({super.key});
-
-  @override
-  State<UpdatableTickerExamplePage> createState() =>
-      UpdatableTickerExamplePageState();
+void main() {
+  runApp(const MyApp());
 }
 
-class UpdatableTickerExamplePageState
-    extends State<UpdatableTickerExamplePage> {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Updatable Ticker Example',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   final Duration oneSec = Duration(milliseconds: 500);
   final double minDesktopWidth = 768;
   final double linePadding = 20;
