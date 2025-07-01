@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+/// class for a smoothly scrolling text ticker that integrates text updates cleanly so that scrolling is glitch-free and uninterrupted.
 class UpdatableTicker extends StatefulWidget {
-  final String updatableText; // text (updatable from parent)
-  final TextStyle style; // text fontFamily, size, and color
-  final double
-      pixelsPerSecond; // speed in pixels per second (60 frames per second)
-  final bool
-      forceUpdate; // true: if a text is updated, display it without delay, false: integrate new text smoothly into ticker without causing disruptions when scrolling
-  final bool center; // true: vertical centering of text
-  final String
-      separator; // add this text to the end of line as separator between texts
+  /// text (updatable from parent)
+  final String updatableText;
 
+  /// text fontFamily, size, and color
+  final TextStyle style;
+
+  /// speed in pixels per second (60 frames per second)
+  final double pixelsPerSecond;
+
+  /// true: if a text is updated, display it without delay, false: integrate new text smoothly into ticker without causing disruptions when scrolling
+  final bool forceUpdate;
+
+  /// true: vertical centering of text
+  final bool center;
+
+  /// add this text to the end of line as separator between texts
+  final String separator;
+
+  /// the properties to configure, a few of them with defaults
   const UpdatableTicker({
     required this.updatableText,
     required this.style,
