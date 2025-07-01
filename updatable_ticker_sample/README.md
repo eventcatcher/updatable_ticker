@@ -26,7 +26,7 @@ The package has a few properties to configure, it's simple.
 String updatableText;       // (updatable) text
 TextStyle style;            // text fontFamily, size, and color
 double pixelsPerSecond;     // speed in pixels per second (60 frames per second)
-final bool forceUpdate;     // true: if a text is updated, display it without delay, 
+bool forceUpdate;           // true: if a text is updated, display it without delay, 
                             // false: integrate new text smoothly into ticker without causing disruptions when scrolling
 bool center;                // true: vertical centering of text
 String separator;           // add this text to the end of line as separator between texts

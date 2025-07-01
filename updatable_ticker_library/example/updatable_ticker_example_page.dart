@@ -75,57 +75,56 @@ class UpdatableTickerExamplePageState
   }
 
   List<Widget> sliders() => [
-    Row(
-      children: [
-        SizedBox(
-          width: width > minDesktopWidth ? null : 64.0,
-          child: Text('Speed: '),
+        Row(
+          children: [
+            SizedBox(
+                width: width > minDesktopWidth ? null : 64.0,
+                child: Text('Speed: ')),
+            SizedBox(
+              width: 170,
+              child: Slider(
+                value: scrollSpeedDevice,
+                min: 0.75,
+                max: 10,
+                divisions: 100,
+                thumbColor: Colors.red.shade700,
+                activeColor: Colors.green.shade200,
+                inactiveColor: Colors.grey.shade700,
+                onChanged: (double value) {
+                  setState(() {
+                    scrollSpeedDevice = value;
+                  });
+                },
+              ),
+            ),
+            Text('${(50 * scrollSpeedDevice).floor()} px/s'),
+          ],
         ),
-        SizedBox(
-          width: 170,
-          child: Slider(
-            value: scrollSpeedDevice,
-            min: 0.75,
-            max: 10,
-            divisions: 100,
-            thumbColor: Colors.red.shade700,
-            activeColor: Colors.green.shade200,
-            inactiveColor: Colors.grey.shade700,
-            onChanged: (double value) {
-              setState(() {
-                scrollSpeedDevice = value;
-              });
-            },
-          ),
+        if (width > minDesktopWidth) Expanded(child: SizedBox()),
+        Row(
+          children: [
+            SizedBox(width: 64.0, child: Text('Fontsize: ')),
+            SizedBox(
+              width: 170,
+              child: Slider(
+                value: fontSize,
+                min: fontMinSize.toDouble(),
+                max: fontMaxSize.toDouble(),
+                divisions: fontMaxSize - fontMinSize,
+                thumbColor: Colors.red.shade700,
+                activeColor: Colors.green.shade200,
+                inactiveColor: Colors.grey.shade700,
+                onChanged: (double value) {
+                  setState(() {
+                    fontSize = value;
+                  });
+                },
+              ),
+            ),
+            Text('$fontSize px'),
+          ],
         ),
-        Text('${(50 * scrollSpeedDevice).floor()} px/s'),
-      ],
-    ),
-    if (width > minDesktopWidth) Expanded(child: SizedBox()),
-    Row(
-      children: [
-        SizedBox(width: 64.0, child: Text('Fontsize: ')),
-        SizedBox(
-          width: 170,
-          child: Slider(
-            value: fontSize,
-            min: fontMinSize.toDouble(),
-            max: fontMaxSize.toDouble(),
-            divisions: fontMaxSize - fontMinSize,
-            thumbColor: Colors.red.shade700,
-            activeColor: Colors.green.shade200,
-            inactiveColor: Colors.grey.shade700,
-            onChanged: (double value) {
-              setState(() {
-                fontSize = value;
-              });
-            },
-          ),
-        ),
-        Text('$fontSize px'),
-      ],
-    ),
-  ];
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -137,136 +136,135 @@ class UpdatableTickerExamplePageState
         child: SizedBox(
           width: MediaQuery.of(context).size.width - 64,
           child: OrientationBuilder(
-            builder: (BuildContext context, Orientation o) {
-              orientation = o;
+              builder: (BuildContext context, Orientation o) {
+            orientation = o;
 
-              return NotificationListener<SizeChangedLayoutNotification>(
-                onNotification: (notification) {
-                  width = MediaQuery.of(context).size.width;
-                  height = MediaQuery.of(context).size.height;
-                  build(context);
-                  return false;
-                },
-                child: SizeChangedLayoutNotifier(
-                  child: SizedBox(
-                    key: ValueKey(
-                      'UpdatableTickerWrapper-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width',
-                    ),
-                    width: width - 16,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: linePadding),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 150.0,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'width: ',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text('${width - 16}'),
-                                  ],
-                                ),
-                              ),
-                              Row(
+            return NotificationListener<SizeChangedLayoutNotification>(
+              onNotification: (notification) {
+                width = MediaQuery.of(context).size.width;
+                height = MediaQuery.of(context).size.height;
+                build(context);
+                return false;
+              },
+              child: SizeChangedLayoutNotifier(
+                child: SizedBox(
+                  key: ValueKey(
+                    'UpdatableTickerWrapper-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width',
+                  ),
+                  width: width - 16,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: linePadding),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 150.0,
+                              child: Row(
                                 children: [
                                   Text(
-                                    'orientation: ',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    'width: ',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                  Text(orientation.name),
+                                  Text('${width - 16}'),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: linePadding),
-                          child: SizedBox(
-                            height: maxLines * 20,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                            Row(
                               children: [
                                 Text(
-                                  'new text: ',
+                                  'orientation: ',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                Flexible(
-                                  child: Text(
-                                    updatableText,
-                                    maxLines: maxLines,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
+                                Text(orientation.name),
                               ],
                             ),
-                          ),
+                          ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: linePadding),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: linePadding),
+                        child: SizedBox(
+                          height: maxLines * 20,
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'next update: ',
+                                'new text: ',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Text('in $seconds seconds'),
+                              Flexible(
+                                child: Text(
+                                  updatableText,
+                                  maxLines: maxLines,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: linePadding),
-                          child:
-                              width > minDesktopWidth
-                                  ? Row(children: sliders())
-                                  : SizedBox(
-                                    height: 100.0,
-                                    child: SizedBox(
-                                      height: 100.0,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: sliders(),
-                                      ),
-                                    ),
-                                  ),
-                        ),
-                        if (width > minDesktopWidth)
-                          Expanded(child: SizedBox()),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: SizedBox(
-                            height: (fontMaxSize * 1.2).toDouble(),
-                            child: UpdatableTicker(
-                              key: ValueKey(
-                                'UpdatableTickerExamplePage-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width-$fontSize',
-                              ),
-                              updatableText: updatableText,
-                              style: TextStyle(
-                                fontFamily: 'whiteCupertino subtitle',
-                                fontSize: fontSize,
-                                color: Colors.black,
-                              ),
-                              pixelsPerSecond: 50 * scrollSpeedDevice,
-                              forceUpdate: false,
-                              separator: '    ////    ',
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: linePadding),
+                        child: Row(
+                          children: [
+                            Text(
+                              'next update: ',
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
+                            Text('in $seconds seconds'),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: linePadding),
+                        child: width > minDesktopWidth
+                            ? Row(
+                                children: sliders(),
+                              )
+                            : SizedBox(
+                                height: 100.0,
+                                child: SizedBox(
+                                  height: 100.0,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: sliders(),
+                                  ),
+                                ),
+                              ),
+                      ),
+                      if (width > minDesktopWidth)
+                        Expanded(
+                          child: SizedBox(),
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: SizedBox(
+                          height: (fontMaxSize * 1.2).toDouble(),
+                          child: UpdatableTicker(
+                            key: ValueKey(
+                              'UpdatableTickerExamplePage-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width-$fontSize',
+                            ),
+                            updatableText: updatableText,
+                            style: TextStyle(
+                              fontFamily: 'whiteCupertino subtitle',
+                              fontSize: fontSize,
+                              color: Colors.black,
+                            ),
+                            pixelsPerSecond: 50 * scrollSpeedDevice,
+                            forceUpdate: false,
+                            separator: '    ////    ',
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          }),
         ),
       ),
     );

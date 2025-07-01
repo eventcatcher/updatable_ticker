@@ -1,97 +1,60 @@
-# Updatable Ticker
+# Updatable Ticker Project
 
 A flutter widget for a smoothly scrolling text ticker that integrates text updates cleanly so that scrolling is glitch-free and uninterrupted. The main feature is that all text updates take place in the area of the text buffer that is not yet visible, so that the text does not disrupt (glitch effect) during display.
 
-# Getting Started
+![ticker-demo](https://github.com/user-attachments/assets/6e6fe6b7-72a2-4b24-ac7b-80827f504a7b)
 
-Add this to your package's pubspec.yaml file:
+ticker-demo:
+<video width="1602" height="846" controls>
+  <source src="https://github.com/user-attachments/assets/6e6fe6b7-72a2-4b24-ac7b-80827f504a7b" autoplay type="video/mp4">
+</video>
 
+
+## Project Structure
+
+This repository contains two main components:
+
+### 1. Updatable Ticker Library (`updatable_ticker_library`)
+
+A pure Flutter library that provides a customizable ticker widget for animated, updatable text transitions. 
+
+### 2. Updatable Ticker Sample App (`updatable_ticker_sample`)
+
+A comprehensive sample application that demonstrates how to use the Updatable Ticker library:
+
+- **Basic Demo**: A randomly timed actualization of generated demo text (lorem ipsum) with random word lengths.
+The UpdatableTicker will rebuild when alignment, width or font size changes.
+To do this, the UpdatableTicker is wrapped with OrientationBuilder, SizeChangedLayoutNotifier and a ValueKey.
+You can control speed and fontsize with sliders.
+
+
+## Getting Started
+
+### Using the Library
+
+Add this to your package's `pubspec.yaml` file for local testing:
+
+```yaml
+dependencies:
+  updatable_ticker:
+    path: path/to/flutter_ticker_library
 ```
+
+or if loading from pub.dev:
+
+```yaml
 dependencies:
   updatable_ticker: ^1.0.0
 ```
 
-# Usage 
+### Running the Sample App
 
-Then you just have to import the package with
-```
-import 'package:updatable_ticker/updatable_ticker.dart';
-```
-
-# Properties
-
-The package has a few properties to configure, it's simple.
-
-```
-String updatableText;       // (updatable) text
-TextStyle style;            // text fontFamily, size, and color
-double pixelsPerSecond;     // speed in pixels per second (60 frames per second)
-final bool forceUpdate;     // true: if a text is updated, display it without delay, 
-                            // false: integrate new text smoothly into ticker without causing disruptions when scrolling
-bool center;                // true: vertical centering of text
-String separator;           // add this text to the end of line as separator between texts
+```bash
+cd updatable_ticker_sample
+flutter pub get
+flutter run
 ```
 
-# Example
-This is a small example: 
-```
-import 'package:flutter/material.dart';
-import 'package:updatable_ticker/updatable_ticker.dart';
+## License
 
-class ExamplePage extends StatefulWidget {
-  const ExamplePage({super.key});
-
-  @override
-  State<ExamplePage> createState() => ExamplePageState();
-}
-
-class ExamplePageState extends State<ExamplePage> {
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: SizedBox(
-          width: 800.0,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: SizedBox(
-                  height: 100.0,
-                  child: UpdatableTicker(
-                    key: ValueKey(
-                      'ExamplePage',
-                    ),
-                    updatableText: 'This is a sample Text',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.black,
-                    ),
-                    pixelsPerSecond: 80,
-                    forceUpdate: false,
-                    separator: '    ////    ',
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-```
-
-But you need a little bit more if you want to update the text automatically.
-First of all, you need a source of text which updates from time to time.
-This variable is required for the connection with the updatableText property.
-
-In my example, I have randomly timed the actualization of text data with a Timer.periodic, which generates demo text (lorem ipsum) with random word lengths.
-The UpdatableTicker will rebuild when alignment, width or font size changes.
-To do this, you must wrap the UpdatableTicker with OrientationBuilder, SizeChangedLayoutNotifier and a ValueKey with this data as the key for UpdatableTicker.
-
-A nice example how to do this can you find on my Github Page (part of updatable_ticker repo) here: https://github.com/eventcatcher/updatable_ticker/tree/main/updatable_ticker_sample
-
-# Feedback
-
-Please feel free to [give me any feedback](https://github.com/eventcatcher/updatable_ticker/issues) helping support this plugin !
+This project is licensed under the BSD 3-Clause License - see the LICENSE file for details.

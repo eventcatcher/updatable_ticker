@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -6,12 +5,12 @@ class UpdatableTicker extends StatefulWidget {
   final String updatableText; // text (updatable from parent)
   final TextStyle style; // text fontFamily, size, and color
   final double
-  pixelsPerSecond; // speed in pixels per second (60 frames per second)
+      pixelsPerSecond; // speed in pixels per second (60 frames per second)
   final bool
-  forceUpdate; // true: if a text is updated, display it without delay, false: integrate new text smoothly into ticker without causing disruptions when scrolling
+      forceUpdate; // true: if a text is updated, display it without delay, false: integrate new text smoothly into ticker without causing disruptions when scrolling
   final bool center; // true: vertical centering of text
   final String
-  separator; // add this text to the end of line as separator between texts
+      separator; // add this text to the end of line as separator between texts
 
   const UpdatableTicker({
     required this.updatableText,
@@ -78,8 +77,7 @@ class _UpdatableTickerState extends State<UpdatableTicker>
   void refreshSecuritySpacing() {
     securityPxSpacing = widget.pixelsPerSecond * securitySecSpacing;
     if (securityPxSpacing > containerWidth / 3) {
-      securityPxSpacing =
-          containerWidth /
+      securityPxSpacing = containerWidth /
           3; // max security spacing is third of container width (to have enough time to pre-generate rendering data)
     }
   }
@@ -109,12 +107,6 @@ class _UpdatableTickerState extends State<UpdatableTicker>
                 !secondTextVisible)) {
           List updateProperties = updateRenderDataList();
           updateRenderingProperties(updateProperties);
-
-          if (kDebugMode) {
-            debugPrint(
-              'UpdatableTicker => new text received (std) => generate var updates + set @ ${DateTime.now().toLocal()} => firstTextIsEmpty: $firstTextIsEmpty, offset: ${offset.abs()}, posSecondTextStarts: $posSecondTextStarts, posToUpdate: $posToUpdate, secondTextVisible: $secondTextVisible, secondText: $secondText',
-            );
-          }
         } else {
           // If firstText and secondText are running, then it's only possible to replace secondText with the new text and re-render it directly, as long as no part of the new text is visible.
           // If part of the secondText is already visible, it's required to wait for the switch until only secondText is displayed (set firstText = ‘’).
@@ -122,12 +114,6 @@ class _UpdatableTickerState extends State<UpdatableTicker>
 
           firstText = secondTextBeforeUpdate;
           nextUpdateProperties = updateRenderDataList(withOffset: false);
-
-          if (kDebugMode) {
-            debugPrint(
-              'UpdatableTicker => new text for early var preparation received @ ${DateTime.now().toLocal()} => offset: ${offset.abs()}, posSecondTextStarts: $posSecondTextStarts, secondTextVisible: $secondTextVisible, posToUpdate: ${nextUpdateProperties[2]}, next secondText: ${nextUpdateProperties[0]}, ',
-            );
-          }
         }
       }
     }
@@ -162,28 +148,22 @@ class _UpdatableTickerState extends State<UpdatableTicker>
     double firstTextWidth = measureTextSize(text: firstText);
     double preparedSecondTextWidth = measureTextSize(text: secondText);
 
-    int minRepeatCountFirstText =
-        firstTextWidth > 0
-            ? (((withOffset ? offset.abs() : 0) + containerWidth) /
-                    firstTextWidth)
-                .ceil()
-            : 0;
-    int preparedMinRepeatCountSecondText =
-        preparedSecondTextWidth > 0
-            ? (containerWidth / preparedSecondTextWidth).ceil()
-            : 1;
+    int minRepeatCountFirstText = firstTextWidth > 0
+        ? (((withOffset ? offset.abs() : 0) + containerWidth) / firstTextWidth)
+            .ceil()
+        : 0;
+    int preparedMinRepeatCountSecondText = preparedSecondTextWidth > 0
+        ? (containerWidth / preparedSecondTextWidth).ceil()
+        : 1;
 
-    List<String> textBuffer =
-        List.filled(minRepeatCountFirstText, firstText) +
+    List<String> textBuffer = List.filled(minRepeatCountFirstText, firstText) +
         List.filled(preparedMinRepeatCountSecondText * loopsToFill, secondText);
-    double preparedPosToUpdate =
-        firstText != ''
-            ? minRepeatCountFirstText * firstTextWidth
-            : preparedMinRepeatCountSecondText * preparedSecondTextWidth;
-    double preparePosSecondTextStarts =
-        firstText != ''
-            ? minRepeatCountFirstText * firstTextWidth - containerWidth
-            : -1;
+    double preparedPosToUpdate = firstText != ''
+        ? minRepeatCountFirstText * firstTextWidth
+        : preparedMinRepeatCountSecondText * preparedSecondTextWidth;
+    double preparePosSecondTextStarts = firstText != ''
+        ? minRepeatCountFirstText * firstTextWidth - containerWidth
+        : -1;
 
     return [
       secondText,
@@ -197,22 +177,11 @@ class _UpdatableTickerState extends State<UpdatableTicker>
 
   void replaceTextBufferWithNewText() {
     if (nextUpdateProperties.isNotEmpty) {
-      double actualPosToUpdate = posToUpdate;
       offset = 0;
       if (containerWidth > 0) {
         updateRenderingProperties(nextUpdateProperties);
       }
-      if (kDebugMode) {
-        debugPrint(
-          'UpdatableTicker =>  buffer update with prepared properties @ ${DateTime.now().toLocal()} => nextUpdateProperties isNotEmpty: ${nextUpdateProperties.isNotEmpty}, offset: ${offset.abs()}, actualPosToUpdate: $actualPosToUpdate, new posToUpdate: $posToUpdate',
-        );
-      }
     } else {
-      if (kDebugMode) {
-        debugPrint(
-          'UpdatableTicker =>  buffer update only with secondText part @ ${DateTime.now().toLocal()} => nextUpdateProperties isNotEmpty: ${nextUpdateProperties.isNotEmpty}, offset: ${offset.abs()}, posToUpdate: $posToUpdate',
-        );
-      }
       List<String> textBuffer = List.filled(
         minRepeatCountSecondText * loopsToFill,
         secondText,
@@ -221,13 +190,6 @@ class _UpdatableTickerState extends State<UpdatableTicker>
       firstText = '';
       renderedText = textBuffer.join();
       posToUpdate = minRepeatCountSecondText * secondTextWidth;
-    }
-
-    if (kDebugMode) {
-      debugPrint(
-        'UpdatableTicker =>  buffer update => reset offset + new generated posToUpdate: $posToUpdate ($minRepeatCountSecondText x $secondTextWidth)',
-      );
-      debugPrint('UpdatableTicker => ---');
     }
   }
 
@@ -251,11 +213,6 @@ class _UpdatableTickerState extends State<UpdatableTicker>
           containerWidth = constraints.maxWidth;
           List updateProperties = updateRenderDataList();
           updateRenderingProperties(updateProperties);
-          if (kDebugMode) {
-            debugPrint(
-              'UpdatableTicker => widget build => var generating + set @ ${DateTime.now().toLocal()}, secondText: $secondText',
-            );
-          }
         }
 
         textHeight = measureTextSize(text: 'XXX', vertical: true);
