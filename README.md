@@ -4,12 +4,6 @@ A flutter widget for a smoothly scrolling text ticker that integrates text updat
 
 ![ticker-demo](https://github.com/user-attachments/assets/6e6fe6b7-72a2-4b24-ac7b-80827f504a7b)
 
-ticker-demo:
-<video width="1602" height="846" controls>
-  <source src="https://github.com/user-attachments/assets/6e6fe6b7-72a2-4b24-ac7b-80827f504a7b" autoplay type="video/mp4">
-</video>
-
-
 ## Project Structure
 
 This repository contains two main components:
