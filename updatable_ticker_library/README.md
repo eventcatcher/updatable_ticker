@@ -2,13 +2,20 @@
 
 A flutter widget for a smoothly scrolling text ticker that integrates text updates cleanly so that scrolling is glitch-free and uninterrupted. The main feature is that all text updates take place in the area of the text buffer that is not yet visible, so that the text does not disrupt (glitch effect) during display.
 
+![](https://github.com/user-attachments/assets/6e6fe6b7-72a2-4b24-ac7b-80827f504a7b)
+
 # Getting Started
 
 Add this to your package's pubspec.yaml file:
 
 ```
 dependencies:
-  updatable_ticker: ^1.0.0
+  updatable_ticker: ^1.0.2
+```
+
+or (better) run this command:
+```
+$ flutter pub add updatable_ticker
 ```
 
 # Usage 
