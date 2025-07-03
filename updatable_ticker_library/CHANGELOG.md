@@ -1,3 +1,7 @@
+## 1.0.5
+
+- add missing setstate on example page
+
 ## 1.0.4
 
 - add gradient fade-in-out option to example page

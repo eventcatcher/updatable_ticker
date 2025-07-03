@@ -201,7 +201,9 @@ class UpdatableTickerExamplePageState
                               Checkbox(
                                 value: withGradient,
                                 onChanged: (bool? mode) {
-                                  withGradient = !withGradient;
+                                  setState(() {
+                                    withGradient = !withGradient;
+                                  });
                                 },
                               ),
                               Text('with opacity fading'),

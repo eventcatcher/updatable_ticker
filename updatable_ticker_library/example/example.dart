@@ -219,7 +219,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               Checkbox(
                                 value: withGradient,
                                 onChanged: (bool? mode) {
-                                  withGradient = !withGradient;
+                                  setState(() {
+                                    withGradient = !withGradient;
+                                  });
                                 },
                               ),
                               Text('with opacity fading'),

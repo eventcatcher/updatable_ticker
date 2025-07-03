@@ -1,3 +1,7 @@
+## 1.0.2
+
+- add missing setstate
+
 ## 1.0.1
 
 - add gradient fade-in-out option
