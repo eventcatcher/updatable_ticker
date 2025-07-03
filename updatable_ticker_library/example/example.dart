@@ -34,9 +34,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final LinearGradient gradient = LinearGradient(
+    colors: <Color>[Color.fromARGB(0, 0, 0, 0), Color.fromARGB(255, 0, 0, 0)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
   final Duration oneSec = Duration(milliseconds: 500);
   final double minDesktopWidth = 768;
   final double linePadding = 20;
+  final double gradientWidthInPx = 80;
+  final double borderSpace = 64;
   final int fontMinSize = 12;
   final int fontMaxSize = 80;
   final int maxLines = 4;
@@ -46,14 +53,17 @@ class _MyHomePageState extends State<MyHomePage> {
   String updatableText = '';
   double width = 1280;
   double height = 768;
+  double gradientWidth = 0;
   double scrollSpeedDevice = 1.0;
   double fontSize = 12.0;
   int rng = -1;
   int seconds = 0;
+  bool withGradient = false;
 
   @override
   void initState() {
     super.initState();
+
     randomUpdates();
 
     Timer.periodic(
@@ -148,6 +158,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    gradientWidth =
+        width > 0 ? 1 / (width - borderSpace) * gradientWidthInPx : 0;
 
     return SafeArea(
       child: Center(
@@ -171,25 +183,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   width: width - 16,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: linePadding),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 150.0,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'width: ',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text('${width - 16}'),
-                                ],
-                              ),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 150.0,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'width: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text('${width - 16}'),
+                              ],
                             ),
-                            Row(
+                          ),
+                          SizedBox(
+                            width: 220.0,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
                                   'orientation: ',
@@ -198,8 +212,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                 Text(orientation.name),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Checkbox(
+                                value: withGradient,
+                                onChanged: (bool? mode) {
+                                  withGradient = !withGradient;
+                                },
+                              ),
+                              Text('with opacity fading'),
+                            ],
+                          ),
+                        ],
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: linePadding),
@@ -259,22 +285,54 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: SizedBox(
-                          height: (fontMaxSize * 1.2).toDouble(),
-                          child: UpdatableTicker(
-                            key: ValueKey(
-                              'UpdatableTickerExamplePage-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width-$fontSize',
+                        child: Stack(
+                          children: [
+                            SizedBox(
+                              height: (fontMaxSize * 1.2).toDouble(),
+                              child: UpdatableTicker(
+                                key: ValueKey(
+                                  'UpdatableTickerExamplePage-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width-$fontSize',
+                                ),
+                                updatableText: updatableText,
+                                style: TextStyle(
+                                  fontFamily: 'whiteCupertino subtitle',
+                                  fontSize: fontSize,
+                                  color: Colors.black,
+                                ),
+                                pixelsPerSecond: 50 * scrollSpeedDevice,
+                                forceUpdate: false,
+                                separator: '    ////    ',
+                              ),
                             ),
-                            updatableText: updatableText,
-                            style: TextStyle(
-                              fontFamily: 'whiteCupertino subtitle',
-                              fontSize: fontSize,
-                              color: Colors.black,
-                            ),
-                            pixelsPerSecond: 50 * scrollSpeedDevice,
-                            forceUpdate: false,
-                            separator: '    ////    ',
-                          ),
+                            withGradient
+                                ? Container(
+                                    height: (fontMaxSize * 1.2).toDouble(),
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                          colors: [
+                                            Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            Theme.of(context)
+                                                .scaffoldBackgroundColor
+                                                .withValues(alpha: 0.0),
+                                            Theme.of(context)
+                                                .scaffoldBackgroundColor
+                                                .withValues(alpha: 0.0),
+                                            Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          stops: [
+                                            0.0,
+                                            gradientWidth,
+                                            1 - gradientWidth,
+                                            1.0
+                                          ]),
+                                    ),
+                                  )
+                                : SizedBox(),
+                          ],
                         ),
                       ),
                     ],

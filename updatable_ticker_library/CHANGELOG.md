@@ -1,3 +1,11 @@
+## 1.0.4
+
+- add gradient fade-in-out option to example page
+
+## 1.0.3
+
+- add link of demo video to readme
+
 ## 1.0.2
 
 - add video to readme - fix changelog and readme

@@ -48,10 +48,14 @@
 <section class="desc markdown">
   <h1 id="updatable-ticker">Updatable Ticker</h1>
 <p>A flutter widget for a smoothly scrolling text ticker that integrates text updates cleanly so that scrolling is glitch-free and uninterrupted. The main feature is that all text updates take place in the area of the text buffer that is not yet visible, so that the text does not disrupt (glitch effect) during display.</p>
+<p><img src="https://github.com/user-attachments/assets/6e6fe6b7-72a2-4b24-ac7b-80827f504a7b" alt=""></p>
 <h1 id="getting-started">Getting Started</h1>
 <p>Add this to your package's pubspec.yaml file:</p>
 <pre class="language-dart"><code>dependencies:
-  updatable_ticker: ^1.0.0
+  updatable_ticker: ^1.0.4
+</code></pre>
+<p>or (better) run this command:</p>
+<pre class="language-dart"><code>$ flutter pub add updatable_ticker
 </code></pre>
 <h1 id="usage">Usage</h1>
 <p>Then you just have to import the package with</p>
@@ -122,6 +126,7 @@ This variable is required for the connection with the updatableText property.</p
 The UpdatableTicker will rebuild when alignment, width or font size changes.
 To do this, you must wrap the UpdatableTicker with OrientationBuilder, SizeChangedLayoutNotifier and a ValueKey with this data as the key for UpdatableTicker.</p>
 <p>A nice example how to do this can you find on my Github Page (part of updatable_ticker repo) here: <a href="https://github.com/eventcatcher/updatable_ticker/tree/main/updatable_ticker_sample">https://github.com/eventcatcher/updatable_ticker/tree/main/updatable_ticker_sample</a></p>
+<p>A demo video of how the ticker can look like, you can find here on my Github page: <a href="https://github.com/eventcatcher/updatable_ticker?tab=readme-ov-file#updatable-ticker-project">https://github.com/eventcatcher/updatable_ticker?tab=readme-ov-file#updatable-ticker-project</a></p>
 <h1 id="feedback">Feedback</h1>
 <p>Please feel free to <a href="https://github.com/eventcatcher/updatable_ticker/issues">give me any feedback</a> helping support this plugin !</p>
 </section>
@@ -164,7 +169,7 @@ To do this, you must wrap the UpdatableTicker with OrientationBuilder, SizeChang
 <footer>
   <span class="no-break">
     updatable_ticker
-      1.0.1
+      1.0.4
   </span>
   
 </footer>
