@@ -1,3 +1,7 @@
+## 1.0.6
+
+- add missing top padding on example page
+
 ## 1.0.5
 
 - add missing setstate on example page

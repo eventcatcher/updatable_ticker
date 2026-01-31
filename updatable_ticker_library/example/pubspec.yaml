@@ -1,4 +1,4 @@
-name: updatable_ticker
+name: updatable_ticker_example
 description: "A flutter widget for a smooth scrolling text ticker which integrates text updates cleanly so that scrolling is glitch-free and uninterrupted."
 version: 1.0.6
 homepage: https://github.com/eventcatcher/updatable_ticker
@@ -14,6 +14,8 @@ topics:
   - ticker
   - ui
 
+publish_to: none
+
 environment:
   sdk: ">=2.19.6 <4.0.0"
   flutter: ">=3.0.0"
@@ -21,6 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  ipsum: ^1.0.1
+  updatable_ticker:
+    path: ../
 
 dev_dependencies:
   flutter_test:

@@ -159,7 +159,8 @@ class UpdatableTickerExamplePageState
                 return false;
               },
               child: SizeChangedLayoutNotifier(
-                child: SizedBox(
+                child: Container(
+                  padding: EdgeInsets.only(top: 16.0),
                   key: ValueKey(
                     'UpdatableTickerWrapper-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width',
                   ),
