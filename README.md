@@ -42,7 +42,7 @@ or if loading from pub.dev:
 
 ```yaml
 dependencies:
-  updatable_ticker: ^1.1.1
+  updatable_ticker: ^1.1.2
 ```
 
 ### Running the Sample App

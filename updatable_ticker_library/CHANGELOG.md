@@ -1,3 +1,7 @@
+## 1.1.2
+
+- fix demo video links
+
 ## 1.1.1
 
 - add actual example app
