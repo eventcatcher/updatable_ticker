@@ -2,10 +2,11 @@
 
 A flutter widget for a smoothly scrolling text ticker that integrates text updates cleanly so that scrolling is glitch-free and uninterrupted. The main feature is that all text updates take place in the area of the text buffer that is not yet visible, so that the text does not disrupt (glitch effect) during display.
 
-![ticker-demo](https://github.com/user-attachments/assets/6e6fe6b7-72a2-4b24-ac7b-80827f504a7b)
+## Demo Video
+https://github.com/user-attachments/assets/6e6fe6b7-72a2-4b24-ac7b-80827f504a7b
 
 ## Video of LED Variant
-![led-ticker-demo](https://github.com/user-attachments/assets/d8f4d60a-df56-4a08-a610-3daf2b7ce834)
+https://github.com/user-attachments/assets/d8f4d60a-df56-4a08-a610-3daf2b7ce834
 
 ## Project Structure
 
@@ -41,7 +42,7 @@ or if loading from pub.dev:
 
 ```yaml
 dependencies:
-  updatable_ticker: ^1.1.0
+  updatable_ticker: ^1.1.1
 ```
 
 ### Running the Sample App
@@ -54,4 +55,4 @@ flutter run
 
 ## License
 
-This project is licensed under the BSD 3-Clause License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.

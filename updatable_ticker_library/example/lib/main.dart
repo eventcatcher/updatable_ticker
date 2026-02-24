@@ -46,7 +46,14 @@ class _MyHomePageState extends State<MyHomePage> {
   final double borderSpace = 64;
   final int fontMinSize = 12;
   final int fontMaxSize = 80;
+  final int ledDotMinSize = 1;
+  final int ledDotMaxSize = 10;
   final int maxLines = 4;
+
+  final int modules = 21;
+  final double ledGap = 0.2;
+  final Color ledOnColor = Colors.red.shade500;
+  final Color ledOffColor = const Color(0xFF000000);
 
   Orientation orientation = Orientation.portrait;
   DateTime lastUpdate = DateTime.now();
@@ -56,9 +63,12 @@ class _MyHomePageState extends State<MyHomePage> {
   double gradientWidth = 0;
   double scrollSpeedDevice = 1.0;
   double fontSize = 12.0;
+  double ledSize = 5.0;
   int rng = -1;
   int seconds = 0;
   bool withGradient = false;
+  bool showLedVariant = false;
+  bool useProportionalFont = true;
 
   @override
   void initState() {
@@ -131,25 +141,37 @@ class _MyHomePageState extends State<MyHomePage> {
         if (width > minDesktopWidth) Expanded(child: SizedBox()),
         Row(
           children: [
-            SizedBox(width: 64.0, child: Text('Fontsize: ')),
+            SizedBox(
+                width: 64.0,
+                child: Text(showLedVariant ? 'Dotsize' : 'Fontsize: ')),
             SizedBox(
               width: 170,
               child: Slider(
-                value: fontSize,
-                min: fontMinSize.toDouble(),
-                max: fontMaxSize.toDouble(),
-                divisions: fontMaxSize - fontMinSize,
+                value: showLedVariant ? ledSize : fontSize,
+                min: showLedVariant
+                    ? ledDotMinSize.toDouble()
+                    : fontMinSize.toDouble(),
+                max: showLedVariant
+                    ? ledDotMaxSize.toDouble()
+                    : fontMaxSize.toDouble(),
+                divisions: showLedVariant
+                    ? ledDotMaxSize - ledDotMinSize
+                    : fontMaxSize - fontMinSize,
                 thumbColor: Colors.red.shade700,
                 activeColor: Colors.green.shade200,
                 inactiveColor: Colors.grey.shade700,
                 onChanged: (double value) {
                   setState(() {
-                    fontSize = value;
+                    if (showLedVariant) {
+                      ledSize = value;
+                    } else {
+                      fontSize = value;
+                    }
                   });
                 },
               ),
             ),
-            Text('$fontSize px'),
+            Text(showLedVariant ? '$ledSize px' : '$fontSize px'),
           ],
         ),
       ];
@@ -161,198 +183,245 @@ class _MyHomePageState extends State<MyHomePage> {
     gradientWidth =
         width > 0 ? 1 / (width - borderSpace) * gradientWidthInPx : 0;
 
-    return MaterialApp(
-      title: 'Updatable Ticker',
-      themeMode: ThemeMode.system,
-      home: Material(
-        child: SafeArea(
-          child: Center(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width - 64,
-              child: OrientationBuilder(
-                  builder: (BuildContext context, Orientation o) {
-                orientation = o;
+    return SafeArea(
+      child: Center(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width - 64,
+          child: OrientationBuilder(
+              builder: (BuildContext context, Orientation o) {
+            orientation = o;
 
-                return NotificationListener<SizeChangedLayoutNotification>(
-                  onNotification: (notification) {
-                    width = MediaQuery.of(context).size.width;
-                    height = MediaQuery.of(context).size.height;
-                    build(context);
-                    return false;
-                  },
-                  child: SizeChangedLayoutNotifier(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 16.0),
-                      key: ValueKey(
-                        'UpdatableTickerWrapper-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width',
-                      ),
-                      width: width - 16,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            return NotificationListener<SizeChangedLayoutNotification>(
+              onNotification: (notification) {
+                width = MediaQuery.of(context).size.width;
+                height = MediaQuery.of(context).size.height;
+                build(context);
+                return false;
+              },
+              child: SizeChangedLayoutNotifier(
+                child: Container(
+                  padding: EdgeInsets.only(top: 16.0),
+                  key: ValueKey(
+                    'UpdatableTickerWrapper-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width',
+                  ),
+                  width: width - 16,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
                         children: [
-                          Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 150.0,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'width: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text('${width - 16}'),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 220.0,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      'orientation: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(orientation.name),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Checkbox(
-                                    value: withGradient,
-                                    onChanged: (bool? mode) {
-                                      setState(() {
-                                        withGradient = !withGradient;
-                                      });
-                                    },
-                                  ),
-                                  Text('with opacity fading'),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: linePadding),
-                            child: SizedBox(
-                              height: maxLines * 20,
+                          SizedBox(
+                              width: 142,
+                              height: 32.0,
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'new text: ',
+                                    'Options: ',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                  Flexible(
-                                    child: Text(
-                                      updatableText,
-                                      maxLines: maxLines,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
                                 ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: linePadding),
+                              )),
+                          SizedBox(
+                            width: 250.0,
                             child: Row(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  'next update: ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                Checkbox(
+                                  value: showLedVariant,
+                                  onChanged: (bool? mode) {
+                                    setState(() {
+                                      showLedVariant = !showLedVariant;
+                                    });
+                                  },
                                 ),
-                                Text('in $seconds seconds'),
+                                Text('display LED variant'),
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: linePadding),
-                            child: width > minDesktopWidth
-                                ? Row(
-                                    children: sliders(),
-                                  )
-                                : SizedBox(
-                                    height: 100.0,
-                                    child: SizedBox(
-                                      height: 100.0,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: sliders(),
-                                      ),
-                                    ),
-                                  ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Checkbox(
+                                value: withGradient,
+                                onChanged: (bool? mode) {
+                                  setState(() {
+                                    withGradient = !withGradient;
+                                  });
+                                },
+                              ),
+                              Text('with opacity fading'),
+                            ],
                           ),
-                          if (width > minDesktopWidth)
-                            Expanded(
-                              child: SizedBox(),
-                            ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Stack(
+                        ],
+                      ),
+                      SizedBox(height: 16.0),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 150.0,
+                            child: Row(
                               children: [
-                                SizedBox(
-                                  height: (fontMaxSize * 1.2).toDouble(),
-                                  child: UpdatableTicker(
-                                    key: ValueKey(
-                                      'UpdatableTickerExamplePage-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width-$fontSize',
-                                    ),
-                                    updatableText: updatableText,
-                                    style: TextStyle(
-                                      fontFamily: 'whiteCupertino subtitle',
-                                      fontSize: fontSize,
-                                      color: Colors.black,
-                                    ),
-                                    pixelsPerSecond: 50 * scrollSpeedDevice,
-                                    forceUpdate: false,
-                                    separator: '    ////    ',
-                                  ),
+                                Text(
+                                  'width: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                withGradient
-                                    ? Container(
-                                        height: (fontMaxSize * 1.2).toDouble(),
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                              colors: [
-                                                Theme.of(context)
-                                                    .scaffoldBackgroundColor,
-                                                Theme.of(context)
-                                                    .scaffoldBackgroundColor
-                                                    .withValues(alpha: 0.0),
-                                                Theme.of(context)
-                                                    .scaffoldBackgroundColor
-                                                    .withValues(alpha: 0.0),
-                                                Theme.of(context)
-                                                    .scaffoldBackgroundColor,
-                                              ],
-                                              begin: Alignment.centerLeft,
-                                              end: Alignment.centerRight,
-                                              stops: [
-                                                0.0,
-                                                gradientWidth,
-                                                1 - gradientWidth,
-                                                1.0
-                                              ]),
-                                        ),
-                                      )
-                                    : SizedBox(),
+                                Text('${width - 16}'),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 220.0,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'orientation: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(orientation.name),
                               ],
                             ),
                           ),
                         ],
                       ),
-                    ),
+                      Padding(
+                        padding: EdgeInsets.only(top: linePadding),
+                        child: SizedBox(
+                          height: maxLines * 20,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'new text: ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Flexible(
+                                child: Text(
+                                  updatableText,
+                                  maxLines: maxLines,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: linePadding),
+                        child: Row(
+                          children: [
+                            Text(
+                              'next update: ',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text('in $seconds seconds'),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: linePadding),
+                        child: width > minDesktopWidth
+                            ? Row(
+                                children: sliders(),
+                              )
+                            : SizedBox(
+                                height: 100.0,
+                                child: SizedBox(
+                                  height: 100.0,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: sliders(),
+                                  ),
+                                ),
+                              ),
+                      ),
+                      if (width > minDesktopWidth)
+                        Expanded(
+                          child: SizedBox(),
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Stack(
+                          children: [
+                            showLedVariant
+                                ? SizedBox(
+                                    width: modules * ledSize * 8,
+                                    height: ledSize * 8,
+                                    child: UpdatableLedTicker(
+                                      key: ValueKey(
+                                        'UpdatableTickerExamplePage-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width-$fontSize',
+                                      ),
+                                      updatableText: updatableText,
+                                      modules: modules,
+                                      useProportionalFont: useProportionalFont,
+                                      ledSize: ledSize,
+                                      ledGap: ledGap,
+                                      onColor: ledOnColor,
+                                      offColor: ledOffColor,
+                                      pixelsPerSecond: 50 * scrollSpeedDevice,
+                                      forceUpdate: false,
+                                      separator: '    ////    ',
+                                    ),
+                                  )
+                                : SizedBox(
+                                    height: fontSize + 32,
+                                    child: UpdatableTicker(
+                                      key: ValueKey(
+                                        'UpdatableTickerExamplePage-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width-$fontSize',
+                                      ),
+                                      updatableText: updatableText,
+                                      style: TextStyle(
+                                        fontFamily: 'whiteCupertino subtitle',
+                                        fontSize: fontSize,
+                                        color: Colors.black,
+                                      ),
+                                      pixelsPerSecond: 50 * scrollSpeedDevice,
+                                      forceUpdate: false,
+                                      separator: '    ////    ',
+                                    ),
+                                  ),
+                            withGradient
+                                ? Container(
+                                    height: showLedVariant
+                                        ? ledSize * 8
+                                        : fontSize + 32,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                          colors: [
+                                            Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            Theme.of(context)
+                                                .scaffoldBackgroundColor
+                                                .withValues(alpha: 0.0),
+                                            Theme.of(context)
+                                                .scaffoldBackgroundColor
+                                                .withValues(alpha: 0.0),
+                                            Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          stops: [
+                                            0.0,
+                                            gradientWidth,
+                                            1 - gradientWidth,
+                                            1.0
+                                          ]),
+                                    ),
+                                  )
+                                : SizedBox(),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              }),
-            ),
-          ),
+                ),
+              ),
+            );
+          }),
         ),
       ),
     );

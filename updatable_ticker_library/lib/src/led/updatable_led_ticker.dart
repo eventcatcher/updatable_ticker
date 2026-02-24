@@ -161,7 +161,6 @@ class _UpdatableLedTickerState extends State<UpdatableLedTicker>
       renderedText,
       useProportionalFont: widget.useProportionalFont,
     );
-    print('ttt123 updateRenderingProperties => renderedTextBitmap');
   }
 
   double measureTextSize({required String text, bool vertical = false}) {
@@ -171,7 +170,6 @@ class _UpdatableLedTickerState extends State<UpdatableLedTicker>
       text,
       useProportionalFont: widget.useProportionalFont,
     );
-    print('ttt123 measureTextSize => renderedTextBitmap');
 
     return vertical
         ? currentBitmap.height.toDouble()
@@ -229,8 +227,6 @@ class _UpdatableLedTickerState extends State<UpdatableLedTicker>
         renderedText,
         useProportionalFont: widget.useProportionalFont,
       );
-
-      print('ttt123 replaceTextBufferWithNewText => renderedTextBitmap');
     }
   }
 

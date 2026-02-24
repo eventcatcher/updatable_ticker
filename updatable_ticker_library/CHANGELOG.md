@@ -1,3 +1,7 @@
+## 1.1.1
+
+- add actual example app
+
 ## 1.1.0
 
 - add LED matrix variant
