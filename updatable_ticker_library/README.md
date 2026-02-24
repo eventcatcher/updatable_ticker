@@ -4,13 +4,16 @@ A flutter widget for a smoothly scrolling text ticker that integrates text updat
 
 ![](https://github.com/user-attachments/assets/6e6fe6b7-72a2-4b24-ac7b-80827f504a7b)
 
+## Video of LED Variant
+![](https://github.com/user-attachments/assets/d8f4d60a-df56-4a08-a610-3daf2b7ce834)
+
 # Getting Started
 
 Add this to your package's pubspec.yaml file:
 
 ```
 dependencies:
-  updatable_ticker: ^1.0.6
+  updatable_ticker: ^1.1.0
 ```
 
 or (better) run this command:

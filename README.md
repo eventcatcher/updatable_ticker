@@ -4,6 +4,9 @@ A flutter widget for a smoothly scrolling text ticker that integrates text updat
 
 ![ticker-demo](https://github.com/user-attachments/assets/6e6fe6b7-72a2-4b24-ac7b-80827f504a7b)
 
+## Video of LED Variant
+![led-ticker-demo](https://github.com/user-attachments/assets/d8f4d60a-df56-4a08-a610-3daf2b7ce834)
+
 ## Project Structure
 
 This repository contains two main components:
@@ -38,7 +41,7 @@ or if loading from pub.dev:
 
 ```yaml
 dependencies:
-  updatable_ticker: ^1.0.6
+  updatable_ticker: ^1.1.0
 ```
 
 ### Running the Sample App

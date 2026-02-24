@@ -1,3 +1,7 @@
+## 1.1.0
+
+- add LED matrix variant
+
 ## 1.0.6
 
 - add missing top padding on example page, rename example file and move to lib folder, changes in example readme

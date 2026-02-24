@@ -28,7 +28,14 @@ class UpdatableTickerExamplePageState
   final double borderSpace = 64;
   final int fontMinSize = 12;
   final int fontMaxSize = 80;
+  final int ledDotMinSize = 1;
+  final int ledDotMaxSize = 10;
   final int maxLines = 4;
+
+  final int modules = 21;
+  final double ledGap = 0.2;
+  final Color ledOnColor = Colors.red.shade500;
+  final Color ledOffColor = const Color(0xFF000000);
 
   Orientation orientation = Orientation.portrait;
   DateTime lastUpdate = DateTime.now();
@@ -38,9 +45,12 @@ class UpdatableTickerExamplePageState
   double gradientWidth = 0;
   double scrollSpeedDevice = 1.0;
   double fontSize = 12.0;
+  double ledSize = 5.0;
   int rng = -1;
   int seconds = 0;
   bool withGradient = false;
+  bool showLedVariant = false;
+  bool useProportionalFont = true;
 
   @override
   void initState() {
@@ -113,25 +123,37 @@ class UpdatableTickerExamplePageState
         if (width > minDesktopWidth) Expanded(child: SizedBox()),
         Row(
           children: [
-            SizedBox(width: 64.0, child: Text('Fontsize: ')),
+            SizedBox(
+                width: 64.0,
+                child: Text(showLedVariant ? 'Dotsize' : 'Fontsize: ')),
             SizedBox(
               width: 170,
               child: Slider(
-                value: fontSize,
-                min: fontMinSize.toDouble(),
-                max: fontMaxSize.toDouble(),
-                divisions: fontMaxSize - fontMinSize,
+                value: showLedVariant ? ledSize : fontSize,
+                min: showLedVariant
+                    ? ledDotMinSize.toDouble()
+                    : fontMinSize.toDouble(),
+                max: showLedVariant
+                    ? ledDotMaxSize.toDouble()
+                    : fontMaxSize.toDouble(),
+                divisions: showLedVariant
+                    ? ledDotMaxSize - ledDotMinSize
+                    : fontMaxSize - fontMinSize,
                 thumbColor: Colors.red.shade700,
                 activeColor: Colors.green.shade200,
                 inactiveColor: Colors.grey.shade700,
                 onChanged: (double value) {
                   setState(() {
-                    fontSize = value;
+                    if (showLedVariant) {
+                      ledSize = value;
+                    } else {
+                      fontSize = value;
+                    }
                   });
                 },
               ),
             ),
-            Text('$fontSize px'),
+            Text(showLedVariant ? '$ledSize px' : '$fontSize px'),
           ],
         ),
       ];
@@ -169,6 +191,54 @@ class UpdatableTickerExamplePageState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Wrap(
+                        children: [
+                          SizedBox(
+                              width: 142,
+                              height: 32.0,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Options: ',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              )),
+                          SizedBox(
+                            width: 250.0,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Checkbox(
+                                  value: showLedVariant,
+                                  onChanged: (bool? mode) {
+                                    setState(() {
+                                      showLedVariant = !showLedVariant;
+                                    });
+                                  },
+                                ),
+                                Text('display LED variant'),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Checkbox(
+                                value: withGradient,
+                                onChanged: (bool? mode) {
+                                  setState(() {
+                                    withGradient = !withGradient;
+                                  });
+                                },
+                              ),
+                              Text('with opacity fading'),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16.0),
+                      Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           SizedBox(
@@ -195,20 +265,6 @@ class UpdatableTickerExamplePageState
                                 Text(orientation.name),
                               ],
                             ),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Checkbox(
-                                value: withGradient,
-                                onChanged: (bool? mode) {
-                                  setState(() {
-                                    withGradient = !withGradient;
-                                  });
-                                },
-                              ),
-                              Text('with opacity fading'),
-                            ],
                           ),
                         ],
                       ),
@@ -272,26 +328,48 @@ class UpdatableTickerExamplePageState
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Stack(
                           children: [
-                            SizedBox(
-                              height: (fontMaxSize * 1.2).toDouble(),
-                              child: UpdatableTicker(
-                                key: ValueKey(
-                                  'UpdatableTickerExamplePage-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width-$fontSize',
-                                ),
-                                updatableText: updatableText,
-                                style: TextStyle(
-                                  fontFamily: 'whiteCupertino subtitle',
-                                  fontSize: fontSize,
-                                  color: Colors.black,
-                                ),
-                                pixelsPerSecond: 50 * scrollSpeedDevice,
-                                forceUpdate: false,
-                                separator: '    ////    ',
-                              ),
-                            ),
+                            showLedVariant
+                                ? SizedBox(
+                                    width: modules * ledSize * 8,
+                                    height: ledSize * 8,
+                                    child: UpdatableLedTicker(
+                                      key: ValueKey(
+                                        'UpdatableTickerExamplePage-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width-$fontSize',
+                                      ),
+                                      updatableText: updatableText,
+                                      modules: modules,
+                                      useProportionalFont: useProportionalFont,
+                                      ledSize: ledSize,
+                                      ledGap: ledGap,
+                                      onColor: ledOnColor,
+                                      offColor: ledOffColor,
+                                      pixelsPerSecond: 50 * scrollSpeedDevice,
+                                      forceUpdate: false,
+                                      separator: '    ////    ',
+                                    ),
+                                  )
+                                : SizedBox(
+                                    height: fontSize + 32,
+                                    child: UpdatableTicker(
+                                      key: ValueKey(
+                                        'UpdatableTickerExamplePage-${orientation == Orientation.portrait ? 'portrait' : 'landscape'}-$width-$fontSize',
+                                      ),
+                                      updatableText: updatableText,
+                                      style: TextStyle(
+                                        fontFamily: 'whiteCupertino subtitle',
+                                        fontSize: fontSize,
+                                        color: Colors.black,
+                                      ),
+                                      pixelsPerSecond: 50 * scrollSpeedDevice,
+                                      forceUpdate: false,
+                                      separator: '    ////    ',
+                                    ),
+                                  ),
                             withGradient
                                 ? Container(
-                                    height: (fontMaxSize * 1.2).toDouble(),
+                                    height: showLedVariant
+                                        ? ledSize * 8
+                                        : fontSize + 32,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                           colors: [

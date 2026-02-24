@@ -1,3 +1,7 @@
+## 1.1.0
+
+- add LED matrix variant
+
 ## 1.0.2
 
 - add missing setstate
