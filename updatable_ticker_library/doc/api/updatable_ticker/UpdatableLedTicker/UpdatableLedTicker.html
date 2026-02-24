@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the UpdatableTicker constructor from Class UpdatableTicker from the updatable_ticker library, for the Dart programming language.">
-  <title>UpdatableTicker constructor - UpdatableTicker - updatable_ticker library - Dart API</title>
+  <meta name="description" content="API docs for the UpdatableLedTicker constructor from Class UpdatableLedTicker from the updatable_ticker library, for the Dart programming language.">
+  <title>UpdatableLedTicker constructor - UpdatableLedTicker - updatable_ticker library - Dart API</title>
 
 
   
@@ -26,10 +26,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">updatable_ticker</a></li>
     <li><a href="../../updatable_ticker">updatable_ticker.dart</a></li>
-    <li><a href="../../updatable_ticker/UpdatableTicker-class.html">UpdatableTicker</a></li>
-    <li class="self-crumb">UpdatableTicker const constructor</li>
+    <li><a href="../../updatable_ticker/UpdatableLedTicker-class.html">UpdatableLedTicker</a></li>
+    <li class="self-crumb">UpdatableLedTicker const constructor</li>
   </ol>
-  <div class="self-name">UpdatableTicker</div>
+  <div class="self-name">UpdatableLedTicker</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -49,19 +49,23 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="updatable_ticker&#47;UpdatableTicker-class-sidebar.html"
+      data-above-sidebar="updatable_ticker&#47;UpdatableLedTicker-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-constructor">UpdatableTicker</span> constructor 
+<h1><span class="kind-constructor">UpdatableLedTicker</span> constructor 
 </h1></div>
 
     <section class="multi-line-signature">
       const
-      <span class="name ">UpdatableTicker</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-updatableText"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">updatableText</span>, </span></li>
-<li><span class="parameter" id="-param-style"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a></span> <span class="parameter-name">style</span>, </span></li>
+      <span class="name ">UpdatableLedTicker</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-updatableText"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">updatableText</span>, </span></li>
+<li><span class="parameter" id="-param-modules"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">modules</span> = <span class="default-value">21</span>, </span></li>
+<li><span class="parameter" id="-param-useProportionalFont"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">useProportionalFont</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-ledSize"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">ledSize</span> = <span class="default-value">10.0</span>, </span></li>
+<li><span class="parameter" id="-param-ledGap"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">ledGap</span> = <span class="default-value">1.0</span>, </span></li>
+<li><span class="parameter" id="-param-onColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/Color-class.html">Color</a></span> <span class="parameter-name">onColor</span> = <span class="default-value">Colors.red</span>, </span></li>
+<li><span class="parameter" id="-param-offColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/Color-class.html">Color</a></span> <span class="parameter-name">offColor</span> = <span class="default-value">const Color(0xFFdddddd)</span>, </span></li>
 <li><span class="parameter" id="-param-pixelsPerSecond"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">pixelsPerSecond</span> = <span class="default-value">30.0</span>, </span></li>
 <li><span class="parameter" id="-param-forceUpdate"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">forceUpdate</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-center"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">center</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-separator"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">separator</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
 <li><span class="parameter" id="-param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span></li>
 </ol>})
@@ -75,12 +79,16 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">const UpdatableTicker({
+  <pre class="language-dart"><code class="language-dart">const UpdatableLedTicker({
   required this.updatableText,
-  required this.style,
+  this.modules = 21,
+  this.useProportionalFont = false,
+  this.ledSize = 10.0,
+  this.ledGap = 1.0,
+  this.onColor = Colors.red,
+  this.offColor = const Color(0xFFdddddd),
   this.pixelsPerSecond = 30.0,
   this.forceUpdate = false,
-  this.center = false,
   this.separator = &#39;&#39;,
   super.key,
 });</code></pre>
@@ -98,11 +106,11 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">updatable_ticker</a></li>
     <li><a href="../../updatable_ticker">updatable_ticker</a></li>
-    <li><a href="../../updatable_ticker/UpdatableTicker-class.html">UpdatableTicker</a></li>
-    <li class="self-crumb">UpdatableTicker const constructor</li>
+    <li><a href="../../updatable_ticker/UpdatableLedTicker-class.html">UpdatableLedTicker</a></li>
+    <li class="self-crumb">UpdatableLedTicker const constructor</li>
 </ol>
 
-    <h5>UpdatableTicker class</h5>
+    <h5>UpdatableLedTicker class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
