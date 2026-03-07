@@ -116,25 +116,25 @@ class _UpdatableLedTickerState extends State<UpdatableLedTicker>
       if (widget.forceUpdate == true) {
         firstText = '';
         secondText = widget.updatableText + widget.separator;
-        List updateProperties = updateRenderDataList(withOffset: false);
+        final List updateProperties = updateRenderDataList(withOffset: false);
         updateRenderingProperties(updateProperties);
         replaceTextBufferWithNewText();
       } else {
-        bool firstTextIsEmpty = firstText.isEmpty;
+        final bool firstTextIsEmpty = firstText.isEmpty;
 
         if (firstTextIsEmpty) {
           firstText = secondText;
         }
-        String secondTextBeforeUpdate = secondText;
+        final String secondTextBeforeUpdate = secondText;
         secondText = widget.updatableText + widget.separator;
 
-        bool secondTextVisible =
-            offset.abs() >= (posSecondTextStarts - securityPxSpacing);
+        final bool secondTextVisible =
+            offset >= (posSecondTextStarts - securityPxSpacing);
         if (firstTextIsEmpty == true ||
             (!firstTextIsEmpty &&
                 posSecondTextStarts >= 0 &&
                 !secondTextVisible)) {
-          List updateProperties = updateRenderDataList();
+          final List updateProperties = updateRenderDataList();
           updateRenderingProperties(updateProperties);
         } else {
           // If firstText and secondText are running, then it's only possible to replace secondText with the new text and re-render it directly, as long as no part of the new text is visible.
@@ -166,7 +166,7 @@ class _UpdatableLedTickerState extends State<UpdatableLedTicker>
   double measureTextSize({required String text, bool vertical = false}) {
     if (text.isEmpty) return 0;
 
-    final currentBitmap = LedBitmap.fromText(
+    final LedBitmap currentBitmap = LedBitmap.fromText(
       text,
       useProportionalFont: widget.useProportionalFont,
     );
@@ -177,23 +177,23 @@ class _UpdatableLedTickerState extends State<UpdatableLedTicker>
   }
 
   List updateRenderDataList({bool withOffset = true}) {
-    double firstTextWidth = measureTextSize(text: firstText);
-    double preparedSecondTextWidth = measureTextSize(text: secondText);
+    final double firstTextWidth = measureTextSize(text: firstText);
+    final double preparedSecondTextWidth = measureTextSize(text: secondText);
 
-    int minRepeatCountFirstText = firstTextWidth > 0
-        ? (((withOffset ? offset.abs() : 0) + containerWidth) / firstTextWidth)
-            .ceil()
+    final int minRepeatCountFirstText = firstTextWidth > 0
+        ? (((withOffset ? offset : 0) + containerWidth) / firstTextWidth).ceil()
         : 0;
-    int preparedMinRepeatCountSecondText = preparedSecondTextWidth > 0
+    final int preparedMinRepeatCountSecondText = preparedSecondTextWidth > 0
         ? (containerWidth / preparedSecondTextWidth).ceil()
         : 1;
 
-    List<String> textBuffer = List.filled(minRepeatCountFirstText, firstText) +
+    final List<String> textBuffer = List.filled(
+            minRepeatCountFirstText, firstText) +
         List.filled(preparedMinRepeatCountSecondText * loopsToFill, secondText);
-    double preparedPosToUpdate = firstText != ''
+    final double preparedPosToUpdate = firstText != ''
         ? minRepeatCountFirstText * firstTextWidth
         : preparedMinRepeatCountSecondText * preparedSecondTextWidth;
-    double preparePosSecondTextStarts = firstText != ''
+    final double preparePosSecondTextStarts = firstText != ''
         ? minRepeatCountFirstText * firstTextWidth - containerWidth
         : -1;
 
@@ -208,17 +208,16 @@ class _UpdatableLedTickerState extends State<UpdatableLedTicker>
   }
 
   void replaceTextBufferWithNewText() {
+    offset = 0;
     if (nextUpdateProperties.isNotEmpty) {
-      offset = 0;
       if (containerWidth > 0) {
         updateRenderingProperties(nextUpdateProperties);
       }
     } else {
-      List<String> textBuffer = List.filled(
+      final List<String> textBuffer = List.filled(
         minRepeatCountSecondText * loopsToFill,
         secondText,
       );
-      offset = 0;
       firstText = '';
       renderedText = textBuffer.join();
       posToUpdate = minRepeatCountSecondText * secondTextWidth;
@@ -234,9 +233,9 @@ class _UpdatableLedTickerState extends State<UpdatableLedTicker>
     final double delta = widget.pixelsPerSecond / 60; // assuming ~60fps
 
     setState(() {
-      offset -= delta;
+      offset += delta;
 
-      if (offset.abs() >= posToUpdate) {
+      if (offset >= posToUpdate) {
         replaceTextBufferWithNewText(); // switch on posToUpdate (position of the firstText part has disappeared and the seconText part has just arrived at the start of ticker area)
       }
     });
@@ -248,7 +247,7 @@ class _UpdatableLedTickerState extends State<UpdatableLedTicker>
       builder: (context, constraints) {
         if (containerWidth != constraints.maxWidth) {
           containerWidth = constraints.maxWidth;
-          List updateProperties = updateRenderDataList();
+          final List updateProperties = updateRenderDataList();
           updateRenderingProperties(updateProperties);
         }
 
@@ -258,6 +257,7 @@ class _UpdatableLedTickerState extends State<UpdatableLedTicker>
             child: CustomPaint(
               painter: LedMatrixPainter(
                 current: renderedTextBitmap!,
+                ledsHorizontal: widget.modules * 8,
                 offset: offset,
                 ledSize: widget.ledSize,
                 ledGap: widget.ledGap,

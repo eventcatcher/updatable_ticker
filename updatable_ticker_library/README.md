@@ -13,7 +13,7 @@ Add this to your package's pubspec.yaml file:
 
 ```
 dependencies:
-  updatable_ticker: ^1.1.2
+  updatable_ticker: ^1.1.3
 ```
 
 or (better) run this command:

@@ -97,25 +97,25 @@ class _UpdatableTickerState extends State<UpdatableTicker>
       if (widget.forceUpdate == true) {
         firstText = '';
         secondText = widget.updatableText + widget.separator;
-        List updateProperties = updateRenderDataList(withOffset: false);
+        final List updateProperties = updateRenderDataList(withOffset: false);
         updateRenderingProperties(updateProperties);
         replaceTextBufferWithNewText();
       } else {
-        bool firstTextIsEmpty = firstText.isEmpty;
+        final bool firstTextIsEmpty = firstText.isEmpty;
 
         if (firstTextIsEmpty) {
           firstText = secondText;
         }
-        String secondTextBeforeUpdate = secondText;
+        final String secondTextBeforeUpdate = secondText;
         secondText = widget.updatableText + widget.separator;
 
-        bool secondTextVisible =
+        final bool secondTextVisible =
             offset.abs() >= (posSecondTextStarts - securityPxSpacing);
         if (firstTextIsEmpty == true ||
             (!firstTextIsEmpty &&
                 posSecondTextStarts >= 0 &&
                 !secondTextVisible)) {
-          List updateProperties = updateRenderDataList();
+          final List updateProperties = updateRenderDataList();
           updateRenderingProperties(updateProperties);
         } else {
           // If firstText and secondText are running, then it's only possible to replace secondText with the new text and re-render it directly, as long as no part of the new text is visible.
@@ -144,7 +144,7 @@ class _UpdatableTickerState extends State<UpdatableTicker>
 
     final TextScaler textScaler = MediaQuery.of(context).textScaler;
 
-    final tp = TextPainter(
+    final TextPainter tp = TextPainter(
       text: TextSpan(text: text, style: widget.style),
       maxLines: 1,
       textDirection: TextDirection.ltr,
@@ -155,23 +155,24 @@ class _UpdatableTickerState extends State<UpdatableTicker>
   }
 
   List updateRenderDataList({bool withOffset = true}) {
-    double firstTextWidth = measureTextSize(text: firstText);
-    double preparedSecondTextWidth = measureTextSize(text: secondText);
+    final double firstTextWidth = measureTextSize(text: firstText);
+    final double preparedSecondTextWidth = measureTextSize(text: secondText);
 
-    int minRepeatCountFirstText = firstTextWidth > 0
+    final int minRepeatCountFirstText = firstTextWidth > 0
         ? (((withOffset ? offset.abs() : 0) + containerWidth) / firstTextWidth)
             .ceil()
         : 0;
-    int preparedMinRepeatCountSecondText = preparedSecondTextWidth > 0
+    final int preparedMinRepeatCountSecondText = preparedSecondTextWidth > 0
         ? (containerWidth / preparedSecondTextWidth).ceil()
         : 1;
 
-    List<String> textBuffer = List.filled(minRepeatCountFirstText, firstText) +
+    final List<String> textBuffer = List.filled(
+            minRepeatCountFirstText, firstText) +
         List.filled(preparedMinRepeatCountSecondText * loopsToFill, secondText);
-    double preparedPosToUpdate = firstText != ''
+    final double preparedPosToUpdate = firstText != ''
         ? minRepeatCountFirstText * firstTextWidth
         : preparedMinRepeatCountSecondText * preparedSecondTextWidth;
-    double preparePosSecondTextStarts = firstText != ''
+    final double preparePosSecondTextStarts = firstText != ''
         ? minRepeatCountFirstText * firstTextWidth - containerWidth
         : -1;
 
@@ -192,7 +193,7 @@ class _UpdatableTickerState extends State<UpdatableTicker>
         updateRenderingProperties(nextUpdateProperties);
       }
     } else {
-      List<String> textBuffer = List.filled(
+      final List<String> textBuffer = List.filled(
         minRepeatCountSecondText * loopsToFill,
         secondText,
       );
@@ -221,7 +222,7 @@ class _UpdatableTickerState extends State<UpdatableTicker>
       builder: (context, constraints) {
         if (containerWidth != constraints.maxWidth) {
           containerWidth = constraints.maxWidth;
-          List updateProperties = updateRenderDataList();
+          final List updateProperties = updateRenderDataList();
           updateRenderingProperties(updateProperties);
         }
 
@@ -264,8 +265,9 @@ class _UpdatableTickerTextPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final span = TextSpan(text: text, style: textStyle);
-    final tp = TextPainter(text: span, textDirection: TextDirection.ltr);
+    final TextSpan span = TextSpan(text: text, style: textStyle);
+    final TextPainter tp =
+        TextPainter(text: span, textDirection: TextDirection.ltr);
     tp.layout();
 
     canvas.translate(offset, ypos);

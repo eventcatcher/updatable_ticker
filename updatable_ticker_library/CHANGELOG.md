@@ -1,3 +1,7 @@
+## 1.1.3
+
+- performance optimizations
+
 ## 1.1.2
 
 - fix demo video links

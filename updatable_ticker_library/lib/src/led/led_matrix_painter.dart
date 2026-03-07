@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'led_bitmap.dart';
 
-/// Painter that renders led matrix output:
+/// Painter that renders led matrix output
 ///
-/// - bitmap
-/// - onColor
-/// - offColor
-/// - ledGap
 class LedMatrixPainter extends CustomPainter {
   /// - current bitmap
   final LedBitmap current;
+
+  /// - number of horizontal LEDs (led modules * 8)
+  final int ledsHorizontal;
 
   /// - offset
   final double offset;
@@ -29,6 +28,7 @@ class LedMatrixPainter extends CustomPainter {
   /// Creates a [LedMatrixPainter].
   LedMatrixPainter({
     required this.current,
+    required this.ledsHorizontal,
     required this.offset,
     this.onColor = Colors.red,
     this.offColor = const Color(0xFFdddddd),
@@ -38,23 +38,32 @@ class LedMatrixPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final totalHeight = ledSize * 8;
+    final double totalHeight = ledSize * 8;
 
     canvas.clipRect(Rect.fromLTWH(0, 0, size.width, totalHeight));
 
     canvas.save();
-    canvas.translate(offset * ledSize, 0);
     _drawBitmap(canvas, current);
     canvas.restore();
   }
 
   void _drawBitmap(Canvas canvas, LedBitmap bitmap) {
+    final int offsetRounded = offset.round();
+    final int startCol = offsetRounded + ledsHorizontal > bitmap.width
+        ? bitmap.width - ledsHorizontal < 0
+            ? 0
+            : bitmap.width - ledsHorizontal
+        : offsetRounded;
+    final int endCol = startCol + ledsHorizontal >= bitmap.width
+        ? bitmap.width
+        : startCol + ledsHorizontal;
+
     for (int row = 0; row < bitmap.height; row++) {
-      for (int col = 0; col < bitmap.width; col++) {
+      for (int col = startCol; col < endCol; col++) {
         final paint = Paint()
           ..color = bitmap.pixels[row][col] ? onColor : offColor;
 
-        final dx = col * ledSize;
+        final dx = (col - startCol) * ledSize;
         final dy = row * ledSize;
         final rect = Rect.fromLTWH(dx + ledGap / 2, dy + ledGap / 2,
             ledSize - ledGap, ledSize - ledGap);

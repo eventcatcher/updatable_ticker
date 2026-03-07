@@ -22,13 +22,13 @@ class LedBitmap {
     String text, {
     bool useProportionalFont = false,
   }) {
-    final rows = 8;
+    final int rows = 8;
 
     // Hilfsfunktion: rotiert 8x8 Bitmap 90° nach links
     List<List<bool>> rotate90Left(List<List<bool>> matrix) {
-      final rows = matrix.length;
-      final cols = matrix[0].length;
-      final rotated =
+      final int rows = matrix.length;
+      final int cols = matrix[0].length;
+      final List<List<bool>> rotated =
           List.generate(cols, (_) => List<bool>.filled(rows, false));
 
       for (int r = 0; r < rows; r++) {
@@ -40,19 +40,20 @@ class LedBitmap {
     }
 
     int textCols = 0;
-    for (final rune in text.runes) {
+    for (final int rune in text.runes) {
       final List<int> glyph = useProportionalFont
           ? cp437FontProportional[rune & 0xFF]
           : cp437Font[rune & 0xFF];
       textCols += glyph.length;
     }
 
-    final cols = textCols;
-    final bitmap = List.generate(rows, (_) => List<bool>.filled(cols, false));
+    final int cols = textCols;
+    final List<List<bool>> bitmap =
+        List.generate(rows, (_) => List<bool>.filled(cols, false));
 
     // <- Hier kommt Teil 3 hin:
     int xOffset = 0;
-    for (final rune in text.runes) {
+    for (final int rune in text.runes) {
       final List<int> glyph = useProportionalFont
           ? cp437FontProportional[rune & 0xFF]
           : cp437Font[rune & 0xFF];
@@ -64,7 +65,7 @@ class LedBitmap {
       });
 
       // ✅ 90° nach links drehen
-      final rotatedGlyph = rotate90Left(letterBitmap);
+      final List<List<bool>> rotatedGlyph = rotate90Left(letterBitmap);
 
       // in die Gesamtbitmap einfügen
       for (int r = 0; r < 8; r++) {
