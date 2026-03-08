@@ -51,6 +51,7 @@ class UpdatableTickerExamplePageState
   bool withGradient = false;
   bool showLedVariant = false;
   bool useProportionalFont = true;
+  bool enableSmoothScrolling = false;
 
   @override
   void initState() {
@@ -221,6 +222,54 @@ class UpdatableTickerExamplePageState
                               ],
                             ),
                           ),
+                          if (showLedVariant)
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Checkbox(
+                                  value: enableSmoothScrolling,
+                                  onChanged: (bool? mode) {
+                                    setState(() {
+                                      enableSmoothScrolling =
+                                          !enableSmoothScrolling;
+                                    });
+                                  },
+                                ),
+                                Text('smooth scrolling px by px'),
+                              ],
+                            ),
+                        ],
+                      ),
+                      SizedBox(height: 16.0),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 150.0,
+                            height: 40.0,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'width: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text('${width - 16}'),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 242.0,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'orientation: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(orientation.name),
+                              ],
+                            ),
+                          ),
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -234,37 +283,6 @@ class UpdatableTickerExamplePageState
                               ),
                               Text('with opacity fading'),
                             ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16.0),
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 150.0,
-                            child: Row(
-                              children: [
-                                Text(
-                                  'width: ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text('${width - 16}'),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 220.0,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'orientation: ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(orientation.name),
-                              ],
-                            ),
                           ),
                         ],
                       ),
@@ -339,6 +357,8 @@ class UpdatableTickerExamplePageState
                                       updatableText: updatableText,
                                       modules: modules,
                                       useProportionalFont: useProportionalFont,
+                                      enableSmoothScrolling:
+                                          enableSmoothScrolling,
                                       ledSize: ledSize,
                                       ledGap: ledGap,
                                       onColor: ledOnColor,

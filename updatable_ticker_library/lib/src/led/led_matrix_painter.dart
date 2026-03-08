@@ -13,6 +13,9 @@ class LedMatrixPainter extends CustomPainter {
   /// - offset
   final double offset;
 
+  /// enable smooth pixel-precise scrolling (otherwise on false, scroll authentically on ledSize boundary)
+  final bool enableSmoothScrolling;
+
   /// - onColor
   final Color onColor;
 
@@ -30,6 +33,7 @@ class LedMatrixPainter extends CustomPainter {
     required this.current,
     required this.ledsHorizontal,
     required this.offset,
+    this.enableSmoothScrolling = false,
     this.onColor = Colors.red,
     this.offColor = const Color(0xFFdddddd),
     this.ledSize = 10.0,
@@ -42,21 +46,24 @@ class LedMatrixPainter extends CustomPainter {
 
     canvas.clipRect(Rect.fromLTWH(0, 0, size.width, totalHeight));
 
-    canvas.save();
+    if (enableSmoothScrolling == true) {
+      canvas.translate(-(offset % 1) * ledSize, 0);
+    }
     _drawBitmap(canvas, current);
-    canvas.restore();
   }
 
   void _drawBitmap(Canvas canvas, LedBitmap bitmap) {
-    final int offsetRounded = offset.round();
-    final int startCol = offsetRounded + ledsHorizontal > bitmap.width
-        ? bitmap.width - ledsHorizontal < 0
+    final int offsetFloor = offset.floor();
+    final int ledMaxWidth =
+        enableSmoothScrolling ? ledsHorizontal + 1 : ledsHorizontal;
+    final int startCol = offsetFloor + ledMaxWidth > bitmap.width
+        ? bitmap.width - ledMaxWidth < 0
             ? 0
-            : bitmap.width - ledsHorizontal
-        : offsetRounded;
-    final int endCol = startCol + ledsHorizontal >= bitmap.width
+            : bitmap.width - ledMaxWidth
+        : offsetFloor;
+    final int endCol = startCol + ledMaxWidth >= bitmap.width
         ? bitmap.width
-        : startCol + ledsHorizontal;
+        : startCol + ledMaxWidth;
 
     for (int row = 0; row < bitmap.height; row++) {
       for (int col = startCol; col < endCol; col++) {
