@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the UpdatableTicker constructor from Class UpdatableTicker from the updatable_ticker library, for the Dart programming language.">
-  <title>UpdatableTicker constructor - UpdatableTicker - updatable_ticker library - Dart API</title>
+  <meta name="description" content="API docs for the operator == method from the UpdatableTicker class, for the Dart programming language.">
+  <title>operator == method - UpdatableTicker class - updatable_ticker library - Dart API</title>
 
 
   
@@ -27,9 +27,9 @@
     <li><a href="../../index.html">updatable_ticker</a></li>
     <li><a href="../../updatable_ticker">updatable_ticker.dart</a></li>
     <li><a href="../../updatable_ticker/UpdatableTicker-class.html">UpdatableTicker</a></li>
-    <li class="self-crumb">UpdatableTicker const constructor</li>
+    <li class="self-crumb">operator == method</li>
   </ol>
-  <div class="self-name">UpdatableTicker</div>
+  <div class="self-name">operator ==</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -46,44 +46,68 @@
   </div>
 </header>
 <main>
-  <div
-      id="dartdoc-main-content"
-      class="main-content"
-      data-above-sidebar="updatable_ticker&#47;UpdatableTicker-class-sidebar.html"
-      data-below-sidebar="">
-      <div>
-<h1><span class="kind-constructor">UpdatableTicker</span> constructor 
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="updatable_ticker&#47;UpdatableTicker-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">operator ==</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
-      const
-      <span class="name ">UpdatableTicker</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-updatableText"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">updatableText</span>, </span></li>
-<li><span class="parameter" id="-param-style"><span>required</span> <span class="type-annotation">TextStyle</span> <span class="parameter-name">style</span>, </span></li>
-<li><span class="parameter" id="-param-pixelsPerSecond"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">pixelsPerSecond</span> = <span class="default-value">30.0</span>, </span></li>
-<li><span class="parameter" id="-param-forceUpdate"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">forceUpdate</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-center"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">center</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-separator"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">separator</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
-<li><span class="parameter" id="-param-key"><span class="type-annotation">Key?</span> <span class="parameter-name">key</span>, </span></li>
-</ol>})
+      
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+        <li>@nonVirtual</li>
+    </ol>
+  </div>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+<span class="name ">operator ==</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span></li>
+</ol>)
+
+      <div class="features"><span class="feature">inherited</span></div>
+
     </section>
     
 <section class="desc markdown">
-  <p>the properties to configure, a few of them with defaults</p>
+  <p>The equality operator.</p>
+<p>The default behavior for all <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a>s is to return true if and
+only if this object and <code>other</code> are the same object.</p>
+<p>Override this method to specify a different equality relation on
+a class. The overriding method must still be an equivalence relation.
+That is, it must be:</p>
+<ul>
+<li>
+<p>Total: It must return a boolean for all arguments. It should never throw.</p>
+</li>
+<li>
+<p>Reflexive: For all objects <code>o</code>, <code>o == o</code> must be true.</p>
+</li>
+<li>
+<p>Symmetric: For all objects <code>o1</code> and <code>o2</code>, <code>o1 == o2</code> and <code>o2 == o1</code> must
+either both be true, or both be false.</p>
+</li>
+<li>
+<p>Transitive: For all objects <code>o1</code>, <code>o2</code>, and <code>o3</code>, if <code>o1 == o2</code> and
+<code>o2 == o3</code> are true, then <code>o1 == o3</code> must be true.</p>
+</li>
+</ul>
+<p>The method should also be consistent over time,
+so whether two objects are equal should only change
+if at least one of the objects was modified.</p>
+<p>If a subclass overrides the equality operator, it should override
+the <a href="../../updatable_ticker/UpdatableTicker/hashCode.html">hashCode</a> method as well to maintain consistency.</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">const UpdatableTicker({
-  required this.updatableText,
-  required this.style,
-  this.pixelsPerSecond = 30.0,
-  this.forceUpdate = false,
-  this.center = false,
-  this.separator = &#39;&#39;,
-  super.key,
-});</code></pre>
+  <pre class="language-dart"><code class="language-dart">@override
+@nonVirtual
+bool operator ==(Object other) =&gt; super == other;</code></pre>
 </section>
 
 
@@ -99,14 +123,14 @@
     <li><a href="../../index.html">updatable_ticker</a></li>
     <li><a href="../../updatable_ticker">updatable_ticker</a></li>
     <li><a href="../../updatable_ticker/UpdatableTicker-class.html">UpdatableTicker</a></li>
-    <li class="self-crumb">UpdatableTicker const constructor</li>
+    <li class="self-crumb">operator == method</li>
 </ol>
 
     <h5>UpdatableTicker class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-left-->
-  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
 </main>
 <footer>
   <span class="no-break">

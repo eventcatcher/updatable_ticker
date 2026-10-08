@@ -1,3 +1,7 @@
+## 1.1.5
+
+- use of round dots (not a square with rounded corners)
+
 ## 1.1.4
 
 - add enableSmoothScrolling option to LED variant to enable smooth pixel-precise scrolling (otherwise on false, scroll authentically on ledSize boundary) which means LED dot by dot

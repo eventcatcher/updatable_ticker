@@ -65,18 +65,21 @@ class LedMatrixPainter extends CustomPainter {
         ? bitmap.width
         : startCol + ledMaxWidth;
 
+    final onPaint = Paint()
+      ..color = onColor
+      ..isAntiAlias = true;
+    final offPaint = Paint()
+      ..color = offColor
+      ..isAntiAlias = true;
+    final double radius = (ledSize - ledGap) / 2;
+    final double center = ledSize / 2;
+
     for (int row = 0; row < bitmap.height; row++) {
       for (int col = startCol; col < endCol; col++) {
-        final paint = Paint()
-          ..color = bitmap.pixels[row][col] ? onColor : offColor;
-
         final dx = (col - startCol) * ledSize;
         final dy = row * ledSize;
-        final rect = Rect.fromLTWH(dx + ledGap / 2, dy + ledGap / 2,
-            ledSize - ledGap, ledSize - ledGap);
-        canvas.drawRRect(
-            RRect.fromRectAndRadius(rect, Radius.circular(ledSize * 0.3)),
-            paint);
+        canvas.drawCircle(Offset(dx + center, dy + center), radius,
+            bitmap.pixels[row][col] ? onPaint : offPaint);
       }
     }
   }

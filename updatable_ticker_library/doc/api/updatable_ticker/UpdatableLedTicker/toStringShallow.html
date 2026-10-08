@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the createState method from the UpdatableLedTicker class, for the Dart programming language.">
-  <title>createState method - UpdatableLedTicker class - updatable_ticker library - Dart API</title>
+  <meta name="description" content="API docs for the toStringShallow method from the UpdatableLedTicker class, for the Dart programming language.">
+  <title>toStringShallow method - UpdatableLedTicker class - updatable_ticker library - Dart API</title>
 
 
   
@@ -27,9 +27,9 @@
     <li><a href="../../index.html">updatable_ticker</a></li>
     <li><a href="../../updatable_ticker">updatable_ticker.dart</a></li>
     <li><a href="../../updatable_ticker/UpdatableLedTicker-class.html">UpdatableLedTicker</a></li>
-    <li class="self-crumb">createState method</li>
+    <li class="self-crumb">toStringShallow method</li>
   </ol>
-  <div class="self-name">createState</div>
+  <div class="self-name">toStringShallow</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -52,45 +52,57 @@
     data-above-sidebar="updatable_ticker&#47;UpdatableLedTicker-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">createState</span> method 
+<h1><span class="kind-method">toStringShallow</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-  <div>
-    <ol class="annotation-list">
-        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
-    </ol>
-  </div>
-<span class="returntype">State<span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../updatable_ticker/UpdatableLedTicker-class.html">UpdatableLedTicker</a></span>&gt;</span></span>
-<span class="name ">createState</span>(<wbr>)
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">toStringShallow</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="toStringShallow-param-joiner"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">joiner</span> = <span class="default-value">&#39;, &#39;</span>, </span></li>
+<li><span class="parameter" id="toStringShallow-param-minLevel"><span class="type-annotation">DiagnosticLevel</span> <span class="parameter-name">minLevel</span> = <span class="default-value">DiagnosticLevel.debug</span>, </span></li>
+</ol>})
 
-      
+      <div class="features"><span class="feature">inherited</span></div>
 
     </section>
     
 <section class="desc markdown">
-  <p>Creates the mutable state for this widget at a given location in the tree.</p>
-<p>Subclasses should override this method to return a newly created
-instance of their associated <code>State</code> subclass:</p>
-<pre class="language-dart"><code class="language-dart">@override
-State&lt;SomeWidget&gt; createState() =&gt; _SomeWidgetState();
-</code></pre>
-<p>The framework can call this method multiple times over the lifetime of
-a <code>StatefulWidget</code>. For example, if the widget is inserted into the tree
-in multiple locations, the framework will create a separate <code>State</code> object
-for each location. Similarly, if the widget is removed from the tree and
-later inserted into the tree again, the framework will call <a href="../../updatable_ticker/UpdatableLedTicker/createState.html">createState</a>
-again to create a fresh <code>State</code> object, simplifying the lifecycle of
-<code>State</code> objects.</p>
+  <p>Returns a one-line detailed description of the object.</p>
+<p>This description is often somewhat long. This includes the same
+information given by <code>toStringDeep</code>, but does not recurse to any children.</p>
+<p><code>joiner</code> specifies the string which is place between each part obtained
+from <code>debugFillProperties</code>. Passing a string such as <code>'\n '</code> will result
+in a multiline string that indents the properties of the object below its
+name (as per <code>toString</code>).</p>
+<p><code>minLevel</code> specifies the minimum <code>DiagnosticLevel</code> for properties included
+in the output.</p>
+<p>See also:</p>
+<ul>
+<li><code>toString</code>, for a brief description of the object.</li>
+<li><code>toStringDeep</code>, for a description of the subtree rooted at this object.</li>
+</ul>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-State&lt;UpdatableLedTicker&gt; createState() =&gt; _UpdatableLedTickerState();</code></pre>
+  <pre class="language-dart"><code class="language-dart">String toStringShallow({String joiner = &#39;, &#39;, DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+  String? shallowString;
+  assert(() {
+    final result = StringBuffer();
+    result.write(toString());
+    result.write(joiner);
+    final builder = DiagnosticPropertiesBuilder();
+    debugFillProperties(builder);
+    result.write(
+      builder.properties.where((DiagnosticsNode n) =&gt; !n.isFiltered(minLevel)).join(joiner),
+    );
+    shallowString = result.toString();
+    return true;
+  }());
+  return shallowString ?? toString();
+}</code></pre>
 </section>
 
 
@@ -106,7 +118,7 @@ State&lt;UpdatableLedTicker&gt; createState() =&gt; _UpdatableLedTickerState();<
     <li><a href="../../index.html">updatable_ticker</a></li>
     <li><a href="../../updatable_ticker">updatable_ticker</a></li>
     <li><a href="../../updatable_ticker/UpdatableLedTicker-class.html">UpdatableLedTicker</a></li>
-    <li class="self-crumb">createState method</li>
+    <li class="self-crumb">toStringShallow method</li>
 </ol>
 
     <h5>UpdatableLedTicker class</h5>
